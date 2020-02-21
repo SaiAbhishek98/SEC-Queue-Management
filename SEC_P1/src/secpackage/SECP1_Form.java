@@ -6,6 +6,7 @@
 package secpackage;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,11 +14,14 @@ import javax.swing.JOptionPane;
  */
 public class SECP1_Form extends javax.swing.JFrame {
 
+    public Integer count = -1;
+    DefaultTableModel model = null;
     /**
      * Creates new form SECP1_Form
      */
-    public SECP1_Form(String loginid, String Password) {
+    public SECP1_Form() {
         initComponents();
+        model = (DefaultTableModel)queueTable.getModel();
 //        loginPanel.setVisible(false);
     }
 
@@ -153,12 +157,26 @@ public class SECP1_Form extends javax.swing.JFrame {
 
     private void add_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_buttonActionPerformed
         // TODO add your handling code here:
-        loginForm login = new loginForm();
+        loginForm login = new loginForm(this);
         login.setVisible(true);
 //        queueTable.add(login)
 //        queueTextField.setText(login.setValue());
     }//GEN-LAST:event_add_buttonActionPerformed
 
+    public void setTable(loginForm login)
+    {
+        if(login.isAuth())
+        {
+            RowModel row = new RowModel();
+            row.isSelected = false;            
+            row.orderNo = queueTable.getRowCount()+1;
+            row.name = login.getName();
+            row.email = login.getEmail();
+            row.status = "Unpaused";
+            model.addRow(new Object[]{row.isSelected,row.orderNo,row.name,row.email,row.status});
+            
+        }
+    }
     private void unpause_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unpause_buttonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_unpause_buttonActionPerformed
@@ -194,7 +212,7 @@ public class SECP1_Form extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SECP1_Form("", "").setVisible(true);
+                new SECP1_Form().setVisible(true);
             }
         });
     }

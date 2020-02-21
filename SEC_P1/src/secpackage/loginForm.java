@@ -14,11 +14,18 @@ import sun.security.util.Password;
  */
 public class loginForm extends javax.swing.JFrame {
 
+    public SECP1_Form sec = null;
     /**
      * Creates new form loginForm
      */
     public loginForm() {
         initComponents();
+    }
+    
+    public loginForm(SECP1_Form ins)
+    {
+        initComponents();
+        sec = ins;
     }
 
     /**
@@ -150,7 +157,10 @@ public class loginForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Enter login id and password");
         else
         {
-            loginValue = emailTextField.getText();
+            this.setName();
+            this.setEmail();
+            this.setPassword();
+            sec.setTable(this);
             dispose();
         }
     }//GEN-LAST:event_loginButtonActionPerformed
@@ -177,23 +187,27 @@ public class loginForm extends javax.swing.JFrame {
     {
         return name;
     }
-    public void setName(String username) {
+    public void setName() {
         this.name = this.nameTextField.getText();
     }
     public char[] getPassword() {
         return password;
     }
-    public void setPassword(String password) {
+    public void setPassword() {
         this.password = this.jPasswordField.getPassword();
     }
     public String getEmail()
     {
         return email;
     }
-    public void setEmail(String email) {
+    public void setEmail() {
         this.email = this.emailTextField.getText();
     }
     
+    public Boolean isAuth()
+    {
+        return true;
+    }
     /**
      * @param args the command line arguments
      */
