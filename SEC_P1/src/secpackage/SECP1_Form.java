@@ -25,6 +25,7 @@ public class SECP1_Form extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         model = (DefaultTableModel)queueTable.getModel();
+        jLabel1.setVisible(false);
     }
 
     /**
@@ -46,6 +47,7 @@ public class SECP1_Form extends javax.swing.JFrame {
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         queueTable = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
 
         jLabel3.setText("jLabel3");
 
@@ -148,7 +150,10 @@ public class SECP1_Form extends javax.swing.JFrame {
             queueTable.getColumnModel().getColumn(1).setResizable(false);
         }
 
+        jLabel1.setText("The queue is empty.");
+
         jLayeredPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -156,7 +161,9 @@ public class SECP1_Form extends javax.swing.JFrame {
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jLayeredPane1Layout.setVerticalGroup(
@@ -164,7 +171,9 @@ public class SECP1_Form extends javax.swing.JFrame {
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -196,8 +205,10 @@ public class SECP1_Form extends javax.swing.JFrame {
 
     private void pause_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pause_buttonActionPerformed
         // TODO add your handling code here:
+        Object status = null;
         int row = this.getRow();
-        Object status = queueTable.getValueAt(row, 4);
+        if(row != -1)        
+            status = queueTable.getValueAt(row, 4);
         if(status != null && status.toString().equals("Paused"))
             JOptionPane.showMessageDialog(this, "Selected entry is already paused");
         else if(row == -1)            
@@ -235,14 +246,16 @@ public class SECP1_Form extends javax.swing.JFrame {
             row.email = login.getEmail();
             row.status = "Unpaused";
             model.addRow(new Object[]{row.isSelected,row.orderNo,row.name,row.email,row.status});
-            
+            jLabel1.setVisible(false);
         }
     }    
     
     private void unpause_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unpause_buttonActionPerformed
         // TODO add your handling code here:
+        Object status = null;
         int row = this.getRow();
-        Object status = queueTable.getValueAt(row, 4);
+        if(row != -1)        
+            status = queueTable.getValueAt(row, 4);
         if(status != null && status.toString().equals("Unpaused"))
             JOptionPane.showMessageDialog(this, "Selected entry is already unpaused");
         else if(row == -1) 
@@ -279,6 +292,8 @@ public class SECP1_Form extends javax.swing.JFrame {
                 queueTable.setValueAt(row+1, i, 1);
                 row++;
             }
+            if(queueTable.getRowCount() < 1)
+                jLabel1.setVisible(true);
         }
         else if(row == -1 && queueTable.getRowCount() < 1)
         {
@@ -290,7 +305,7 @@ public class SECP1_Form extends javax.swing.JFrame {
 
     private int getRow()
     {
-        int row = 0;
+        int row = -1;
         for(int i = 0; i < queueTable.getRowCount(); i++)
         {
             Object flag = queueTable.getValueAt(i, 0);
@@ -338,6 +353,7 @@ public class SECP1_Form extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add_button;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
