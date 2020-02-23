@@ -38,7 +38,7 @@
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
                       <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -98,6 +98,7 @@
         <Component class="javax.swing.JButton" name="add_button">
           <Properties>
             <Property name="text" type="java.lang.String" value="Add"/>
+            <Property name="toolTipText" type="java.lang.String" value="Adds a new entry to the queue."/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="add_buttonActionPerformed"/>
@@ -106,6 +107,7 @@
         <Component class="javax.swing.JButton" name="remove_button">
           <Properties>
             <Property name="text" type="java.lang.String" value="Remove"/>
+            <Property name="toolTipText" type="java.lang.String" value="Removes selected entry from queue."/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="remove_buttonActionPerformed"/>
@@ -114,6 +116,7 @@
         <Component class="javax.swing.JButton" name="pause_button">
           <Properties>
             <Property name="text" type="java.lang.String" value="Pause"/>
+            <Property name="toolTipText" type="java.lang.String" value="Pauses the selected entry."/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pause_buttonActionPerformed"/>
@@ -122,6 +125,7 @@
         <Component class="javax.swing.JButton" name="unpause_button">
           <Properties>
             <Property name="text" type="java.lang.String" value="Unpause"/>
+            <Property name="toolTipText" type="java.lang.String" value="Unpauses the selected entry."/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="unpause_buttonActionPerformed"/>
@@ -164,7 +168,7 @@
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="5" rowCount="4">
                     <Column editable="true" title="" type="java.lang.Boolean"/>
-                    <Column editable="false" title="Order No" type="java.lang.Object">
+                    <Column editable="false" title="Sequence No." type="java.lang.Object">
                       <Data value="1"/>
                       <Data value="2"/>
                       <Data value="3"/>

@@ -54,6 +54,7 @@ public class SECP1_Form extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         add_button.setText("Add");
+        add_button.setToolTipText("Adds a new entry to the queue.");
         add_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 add_buttonActionPerformed(evt);
@@ -61,6 +62,7 @@ public class SECP1_Form extends javax.swing.JFrame {
         });
 
         remove_button.setText("Remove");
+        remove_button.setToolTipText("Removes selected entry from queue.");
         remove_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 remove_buttonActionPerformed(evt);
@@ -68,6 +70,7 @@ public class SECP1_Form extends javax.swing.JFrame {
         });
 
         pause_button.setText("Pause");
+        pause_button.setToolTipText("Pauses the selected entry.");
         pause_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pause_buttonActionPerformed(evt);
@@ -75,6 +78,7 @@ public class SECP1_Form extends javax.swing.JFrame {
         });
 
         unpause_button.setText("Unpause");
+        unpause_button.setToolTipText("Unpauses the selected entry.");
         unpause_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 unpause_buttonActionPerformed(evt);
@@ -114,7 +118,7 @@ public class SECP1_Form extends javax.swing.JFrame {
                 {null, "4", "D", "d@buffalo.edu", null}
             },
             new String [] {
-                "", "Order No", "Name", "Email ID", "Status"
+                "", "Sequence No.", "Name", "Email ID", "Status"
             }
         ) {
             Class[] types = new Class [] {
@@ -170,7 +174,7 @@ public class SECP1_Form extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(83, 83, 83)
+                        .addGap(94, 94, 94)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(25, 25, 25)
@@ -253,11 +257,14 @@ public class SECP1_Form extends javax.swing.JFrame {
 
     private void queueTablePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_queueTablePropertyChange
         // TODO add your handling code here:
-        int row = queueTable.getSelectedRow();
-        for(int i = 0; i < queueTable.getRowCount(); i++)
+        if(queueTable != null)
         {
-            if(i != row)
-                queueTable.setValueAt(false, i, 0);
+            int row = this.getRow();
+            for(int i = 0; i < queueTable.getRowCount(); i++)
+            {
+                if(i != row)
+                    queueTable.setValueAt(false, i, 0);
+            }
         }
     }//GEN-LAST:event_queueTablePropertyChange
 
@@ -287,7 +294,7 @@ public class SECP1_Form extends javax.swing.JFrame {
         for(int i = 0; i < queueTable.getRowCount(); i++)
         {
             Object flag = queueTable.getValueAt(i, 0);
-            if((Boolean)flag == true)
+            if(flag != null && (Boolean)flag == true)
             {
                 row = i;
             }
