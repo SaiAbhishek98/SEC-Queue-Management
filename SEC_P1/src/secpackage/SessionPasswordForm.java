@@ -17,14 +17,16 @@ public class SessionPasswordForm extends javax.swing.JFrame {
     private Boolean isValid = false;
     private int row;
     private String st = null;
+    private String b = null;
     /**
      * Creates new form SessionPasswordForm
      */
-    public SessionPasswordForm(SECP1_Form ins, int row, String state) {
+    public SessionPasswordForm(SECP1_Form ins, int row, String state, String button) {
         initComponents();
         sess = ins;
         this.row = row;
         st = state;
+        b = button;
         this.setLocationRelativeTo(null);
         this.setResizable(false);
     }
@@ -158,7 +160,14 @@ public class SessionPasswordForm extends javax.swing.JFrame {
         else
         {
             isValid = true;
-            sess.setState(this, row, st);
+            if(b.equals("pause") || b.equals("unpause"))
+            {
+                sess.setState(this, row, st);
+            }
+            else
+            {
+                sess.removeRow(row);
+            }
             this.dispose();
         }
     }//GEN-LAST:event_loginButtonActionPerformed

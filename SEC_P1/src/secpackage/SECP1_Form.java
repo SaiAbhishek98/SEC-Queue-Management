@@ -215,7 +215,7 @@ public class SECP1_Form extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Select an entry first");
         else
         {
-            SessionPasswordForm form = new SessionPasswordForm(this, row, "Paused");
+            SessionPasswordForm form = new SessionPasswordForm(this, row, "Paused","pause");
             form.setVisible(true);            
         }
     }//GEN-LAST:event_pause_buttonActionPerformed
@@ -262,8 +262,7 @@ public class SECP1_Form extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Select an entry first");
         else
         {
-            System.out.println(row);
-            SessionPasswordForm form = new SessionPasswordForm(this, row, "Unpaused");
+            SessionPasswordForm form = new SessionPasswordForm(this, row, "Unpaused", "unpause");
             form.setVisible(true);
         }
     }//GEN-LAST:event_unpause_buttonActionPerformed
@@ -286,14 +285,8 @@ public class SECP1_Form extends javax.swing.JFrame {
         int row = this.getRow();
         if(row != -1)
         {
-            model.removeRow(row);
-            for(int i = row; i<queueTable.getRowCount();i++)
-            {
-                queueTable.setValueAt(row+1, i, 1);
-                row++;
-            }
-            if(queueTable.getRowCount() < 1)
-                jLabel1.setVisible(true);
+            SessionPasswordForm form = new SessionPasswordForm(this, row, "Unpaused","remove");
+            form.setVisible(true);
         }
         else if(row == -1 && queueTable.getRowCount() < 1)
         {
@@ -303,6 +296,18 @@ public class SECP1_Form extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Select an entry to remove");
     }//GEN-LAST:event_remove_buttonActionPerformed
 
+    public void removeRow(int row)
+    {
+        model.removeRow(row);
+            for(int i = row; i<queueTable.getRowCount();i++)
+            {
+                queueTable.setValueAt(row+1, i, 1);
+                row++;
+            }
+            if(queueTable.getRowCount() < 1)
+                jLabel1.setVisible(true);
+    }
+    
     private int getRow()
     {
         int row = -1;
