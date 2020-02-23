@@ -22,6 +22,8 @@ public class SECP1_Form extends javax.swing.JFrame {
     public SECP1_Form() {
         initComponents();
         model = (DefaultTableModel)queueTable.getModel();
+        emptyQueueLabel.setVisible(false);
+//        queueTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 //        loginPanel.setVisible(false);
     }
 
@@ -37,12 +39,14 @@ public class SECP1_Form extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        remove_button = new javax.swing.JButton();
         add_button = new javax.swing.JButton();
+        remove_button = new javax.swing.JButton();
         pause_button = new javax.swing.JButton();
         unpause_button = new javax.swing.JButton();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         queueTable = new javax.swing.JTable();
+        emptyQueueLabel = new javax.swing.JLabel();
 
         jLabel3.setText("jLabel3");
 
@@ -50,12 +54,17 @@ public class SECP1_Form extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        remove_button.setText("Remove");
-
         add_button.setText("Add");
         add_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 add_buttonActionPerformed(evt);
+            }
+        });
+
+        remove_button.setText("Remove");
+        remove_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                remove_buttonActionPerformed(evt);
             }
         });
 
@@ -78,12 +87,11 @@ public class SECP1_Form extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(add_button, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(remove_button, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pause_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pause_button, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(unpause_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -91,12 +99,12 @@ public class SECP1_Form extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(add_button)
                     .addComponent(remove_button)
                     .addComponent(pause_button)
-                    .addComponent(unpause_button)))
+                    .addComponent(unpause_button))
+                .addGap(0, 6, Short.MAX_VALUE))
         );
 
         queueTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -113,37 +121,83 @@ public class SECP1_Form extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
         queueTable.getTableHeader().setReorderingAllowed(false);
+        queueTable.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                queueTablePropertyChange(evt);
+            }
+        });
         jScrollPane1.setViewportView(queueTable);
         if (queueTable.getColumnModel().getColumnCount() > 0) {
-            queueTable.getColumnModel().getColumn(0).setResizable(false);
             queueTable.getColumnModel().getColumn(0).setPreferredWidth(5);
             queueTable.getColumnModel().getColumn(1).setResizable(false);
         }
+
+        emptyQueueLabel.setText("The queue is empty.");
+
+        jLayeredPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(emptyQueueLabel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        jLayeredPane1Layout.setHorizontalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addGap(204, 204, 204)
+                    .addComponent(emptyQueueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(247, Short.MAX_VALUE)))
+        );
+        jLayeredPane1Layout.setVerticalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addGap(134, 134, 134)
+                    .addComponent(emptyQueueLabel)
+                    .addContainerGap(135, Short.MAX_VALUE)))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(28, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(83, 83, 83)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
+                .addGap(87, 87, 87)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -152,7 +206,13 @@ public class SECP1_Form extends javax.swing.JFrame {
 
     private void pause_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pause_buttonActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Select an entry first");
+        int row = queueTable.getSelectedRow();
+        if(row == -1)            
+            JOptionPane.showMessageDialog(this, "Select an entry first");
+        else
+        {
+            model.setValueAt("Paused", row, 4);
+        }
     }//GEN-LAST:event_pause_buttonActionPerformed
 
     private void add_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_buttonActionPerformed
@@ -177,9 +237,46 @@ public class SECP1_Form extends javax.swing.JFrame {
             
         }
     }
+    
+    
     private void unpause_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unpause_buttonActionPerformed
         // TODO add your handling code here:
+        int row = queueTable.getSelectedRow();
+        if(row == -1)            
+            JOptionPane.showMessageDialog(this, "Select an entry first");
+        else
+        {
+            model.setValueAt("Unpaused", row, 4);
+        }
     }//GEN-LAST:event_unpause_buttonActionPerformed
+
+    private void queueTablePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_queueTablePropertyChange
+        // TODO add your handling code here:
+        int row = queueTable.getSelectedRow();
+        for(int i = 0; i < queueTable.getRowCount(); i++)
+        {
+            if(i != row)
+                queueTable.setValueAt(false, i, 0);
+        }
+    }//GEN-LAST:event_queueTablePropertyChange
+
+    private void remove_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remove_buttonActionPerformed
+        // TODO add your handling code here:
+        int row = queueTable.getSelectedRow();
+        if(row != -1)
+        {
+            model.removeRow(row);
+            
+        }
+        else if(row == -1 && queueTable.getRowCount() < 1)
+        {
+            JOptionPane.showMessageDialog(this, "No more entries to remove");           
+            emptyQueueLabel.setVisible(true);
+            jLayeredPane1.add(emptyQueueLabel,2,0);
+        }
+        else
+            JOptionPane.showMessageDialog(this, "Select an entry to remove");
+    }//GEN-LAST:event_remove_buttonActionPerformed
 
     
     /**
@@ -219,7 +316,9 @@ public class SECP1_Form extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add_button;
+    private javax.swing.JLabel emptyQueueLabel;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField2;
