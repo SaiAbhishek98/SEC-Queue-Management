@@ -5,6 +5,7 @@
  */
 package secpackage;
 
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,8 +24,6 @@ public class SECP1_Form extends javax.swing.JFrame {
         initComponents();
         model = (DefaultTableModel)queueTable.getModel();
         emptyQueueLabel.setVisible(false);
-//        queueTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-//        loginPanel.setVisible(false);
     }
 
     /**
@@ -206,15 +205,28 @@ public class SECP1_Form extends javax.swing.JFrame {
 
     private void pause_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pause_buttonActionPerformed
         // TODO add your handling code here:
-        int row = queueTable.getSelectedRow();
-        if(row == -1)            
+        int row = this.getRow();
+        Object status = queueTable.getValueAt(row, 4);
+        if(status.toString().equals("Paused"))
+            JOptionPane.showMessageDialog(this, "Selected entry is already paused");
+        else if(row == -1)            
             JOptionPane.showMessageDialog(this, "Select an entry first");
         else
         {
-            model.setValueAt("Paused", row, 4);
+            SessionPasswordForm form = new SessionPasswordForm(this,row, "Paused");
+            form.setVisible(true);            
         }
     }//GEN-LAST:event_pause_buttonActionPerformed
 
+    public Boolean setState(SessionPasswordForm form, int row, String state)
+    {
+       if(form.isAuth())
+       {
+           model.setValueAt(state, row, 4);
+       } 
+       return true;
+    }
+    
     private void add_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_buttonActionPerformed
         // TODO add your handling code here:
         loginForm login = new loginForm(this);
@@ -241,12 +253,16 @@ public class SECP1_Form extends javax.swing.JFrame {
     
     private void unpause_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unpause_buttonActionPerformed
         // TODO add your handling code here:
-        int row = queueTable.getSelectedRow();
-        if(row == -1)            
+        int row = this.getRow();
+        Object status = queueTable.getValueAt(row, 4);
+        if(status.toString().equals("Unpaused"))
+            JOptionPane.showMessageDialog(this, "Selected entry is already unpaused");
+        else if(row == -1)            
             JOptionPane.showMessageDialog(this, "Select an entry first");
         else
         {
-            model.setValueAt("Unpaused", row, 4);
+            SessionPasswordForm form = new SessionPasswordForm(this, row, "Unpaused");
+            form.setVisible(true);
         }
     }//GEN-LAST:event_unpause_buttonActionPerformed
 
@@ -262,23 +278,38 @@ public class SECP1_Form extends javax.swing.JFrame {
 
     private void remove_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remove_buttonActionPerformed
         // TODO add your handling code here:
-        int row = queueTable.getSelectedRow();
+        int row = this.getRow();
+//        int row = queueTable.getSelectedRow();
         if(row != -1)
         {
             model.removeRow(row);
-            
+            for(int i = row; i<queueTable.getRowCount();i++)
+            {
+                queueTable.setValueAt(row+1, i, 1);
+                row++;
+            }
         }
         else if(row == -1 && queueTable.getRowCount() < 1)
         {
-            JOptionPane.showMessageDialog(this, "No more entries to remove");           
-            emptyQueueLabel.setVisible(true);
-            jLayeredPane1.add(emptyQueueLabel,2,0);
+            JOptionPane.showMessageDialog(this, "No more entries to remove");   
         }
         else
             JOptionPane.showMessageDialog(this, "Select an entry to remove");
     }//GEN-LAST:event_remove_buttonActionPerformed
 
-    
+    private int getRow()
+    {
+        int row = 0;
+        for(int i = 0; i < queueTable.getRowCount(); i++)
+        {
+            Object flag = queueTable.getValueAt(i, 0);
+            if((Boolean)flag == true)
+            {
+                row = i;
+            }
+        }
+        return row;
+    }
     /**
      * @param args the command line arguments
      */

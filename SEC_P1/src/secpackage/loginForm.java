@@ -54,7 +54,7 @@ public class loginForm extends javax.swing.JFrame {
 
         loginLabel.setText("Email id");
 
-        passwordLabel.setText("Password");
+        passwordLabel.setText("SessionPassword");
 
         emailTextField.setName(""); // NOI18N
 
@@ -153,7 +153,7 @@ public class loginForm extends javax.swing.JFrame {
     private String loginValue = null;
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:'
-        if(emailTextField.getText().equals(""))// || passwordTextField.getText().equals(""))
+        if(emailTextField.getText().equals("") || jPasswordField.getPassword().length == 0)
             JOptionPane.showMessageDialog(this, "Enter login id and password");
         else
         {
@@ -161,7 +161,7 @@ public class loginForm extends javax.swing.JFrame {
             this.setEmail();
             this.setPassword();
             sec.setTable(this);
-            dispose();
+            this.dispose();
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 
