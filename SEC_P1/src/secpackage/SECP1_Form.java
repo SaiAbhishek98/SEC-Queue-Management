@@ -22,8 +22,9 @@ public class SECP1_Form extends javax.swing.JFrame {
      */
     public SECP1_Form() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
         model = (DefaultTableModel)queueTable.getModel();
-        emptyQueueLabel.setVisible(false);
     }
 
     /**
@@ -45,7 +46,6 @@ public class SECP1_Form extends javax.swing.JFrame {
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         queueTable = new javax.swing.JTable();
-        emptyQueueLabel = new javax.swing.JLabel();
 
         jLabel3.setText("jLabel3");
 
@@ -144,10 +144,7 @@ public class SECP1_Form extends javax.swing.JFrame {
             queueTable.getColumnModel().getColumn(1).setResizable(false);
         }
 
-        emptyQueueLabel.setText("The queue is empty.");
-
         jLayeredPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(emptyQueueLabel, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -157,11 +154,6 @@ public class SECP1_Form extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                    .addGap(204, 204, 204)
-                    .addComponent(emptyQueueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(247, Short.MAX_VALUE)))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,11 +161,6 @@ public class SECP1_Form extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                    .addGap(134, 134, 134)
-                    .addComponent(emptyQueueLabel)
-                    .addContainerGap(135, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -188,7 +175,7 @@ public class SECP1_Form extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,13 +194,13 @@ public class SECP1_Form extends javax.swing.JFrame {
         // TODO add your handling code here:
         int row = this.getRow();
         Object status = queueTable.getValueAt(row, 4);
-        if(status.toString().equals("Paused"))
+        if(status != null && status.toString().equals("Paused"))
             JOptionPane.showMessageDialog(this, "Selected entry is already paused");
         else if(row == -1)            
             JOptionPane.showMessageDialog(this, "Select an entry first");
         else
         {
-            SessionPasswordForm form = new SessionPasswordForm(this,row, "Paused");
+            SessionPasswordForm form = new SessionPasswordForm(this, row, "Paused");
             form.setVisible(true);            
         }
     }//GEN-LAST:event_pause_buttonActionPerformed
@@ -231,8 +218,6 @@ public class SECP1_Form extends javax.swing.JFrame {
         // TODO add your handling code here:
         loginForm login = new loginForm(this);
         login.setVisible(true);
-//        queueTable.add(login)
-//        queueTextField.setText(login.setValue());
     }//GEN-LAST:event_add_buttonActionPerformed
 
     public void setTable(loginForm login)
@@ -248,19 +233,19 @@ public class SECP1_Form extends javax.swing.JFrame {
             model.addRow(new Object[]{row.isSelected,row.orderNo,row.name,row.email,row.status});
             
         }
-    }
-    
+    }    
     
     private void unpause_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unpause_buttonActionPerformed
         // TODO add your handling code here:
         int row = this.getRow();
         Object status = queueTable.getValueAt(row, 4);
-        if(status.toString().equals("Unpaused"))
+        if(status != null && status.toString().equals("Unpaused"))
             JOptionPane.showMessageDialog(this, "Selected entry is already unpaused");
-        else if(row == -1)            
+        else if(row == -1) 
             JOptionPane.showMessageDialog(this, "Select an entry first");
         else
         {
+            System.out.println(row);
             SessionPasswordForm form = new SessionPasswordForm(this, row, "Unpaused");
             form.setVisible(true);
         }
@@ -279,7 +264,6 @@ public class SECP1_Form extends javax.swing.JFrame {
     private void remove_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remove_buttonActionPerformed
         // TODO add your handling code here:
         int row = this.getRow();
-//        int row = queueTable.getSelectedRow();
         if(row != -1)
         {
             model.removeRow(row);
@@ -347,7 +331,6 @@ public class SECP1_Form extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add_button;
-    private javax.swing.JLabel emptyQueueLabel;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
