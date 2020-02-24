@@ -7,7 +7,13 @@ package secpackage;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.plaf.basic.BasicListUI;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -17,17 +23,28 @@ public class SECP1_Form extends javax.swing.JFrame {
 
     public Integer count = -1;
     DefaultTableModel model = null;
+    public ListSelectionModel rowSelectionModel = null;
     /**
      * Creates new form SECP1_Form
      */
-    public SECP1_Form() {
+    public SECP1_Form() 
+    {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         model = (DefaultTableModel)queueTable.getModel();
         jLabel1.setVisible(false);
+        pause_button.setEnabled(false);
+        unpause_button.setEnabled(false);
+        remove_button.setEnabled(false);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        queueTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        queueTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        ((DefaultTableCellRenderer)queueTable.getTableHeader().getDefaultRenderer())
+        .setHorizontalAlignment(JLabel.CENTER);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -92,7 +109,8 @@ public class SECP1_Form extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(add_button, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(add_button, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(remove_button, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -114,20 +132,20 @@ public class SECP1_Form extends javax.swing.JFrame {
 
         queueTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, "1", "A", "a@buffalo.edu", "Unpaused"},
-                {null, "2", "B", "b@buffalo.edu", "Unpaused"},
-                {null, "3", "C", "c@buffalo.edu", "Unpaused"},
-                {null, "4", "D", "d@buffalo.edu", null}
+                {"A", "Unpaused"},
+                {"B", "Unpaused"},
+                {"C", "Unpaused"},
+                {"D", "Unpaused"}
             },
             new String [] {
-                "", "Sequence No.", "Name", "Email ID", "Status"
+                "Name", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, false
+                false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -139,6 +157,11 @@ public class SECP1_Form extends javax.swing.JFrame {
             }
         });
         queueTable.getTableHeader().setReorderingAllowed(false);
+        queueTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                queueTableMouseClicked(evt);
+            }
+        });
         queueTable.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 queueTablePropertyChange(evt);
@@ -146,7 +169,7 @@ public class SECP1_Form extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(queueTable);
         if (queueTable.getColumnModel().getColumnCount() > 0) {
-            queueTable.getColumnModel().getColumn(0).setPreferredWidth(5);
+            queueTable.getColumnModel().getColumn(0).setResizable(false);
             queueTable.getColumnModel().getColumn(1).setResizable(false);
         }
 
@@ -160,20 +183,21 @@ public class SECP1_Form extends javax.swing.JFrame {
         jLayeredPane1Layout.setHorizontalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addGap(142, 142, 142)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -181,19 +205,16 @@ public class SECP1_Form extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(94, 94, 94)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLayeredPane1)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(87, 87, 87)
+                .addGap(30, 30, 30)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -206,9 +227,9 @@ public class SECP1_Form extends javax.swing.JFrame {
     private void pause_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pause_buttonActionPerformed
         // TODO add your handling code here:
         Object status = null;
-        int row = this.getRow();
+        int row = queueTable.getSelectedRow();
         if(row != -1)        
-            status = queueTable.getValueAt(row, 4);
+            status = queueTable.getValueAt(row, 1);
         if(status != null && status.toString().equals("Paused"))
             JOptionPane.showMessageDialog(this, "Selected entry is already paused");
         else if(row == -1)            
@@ -216,15 +237,25 @@ public class SECP1_Form extends javax.swing.JFrame {
         else
         {
             SessionPasswordForm form = new SessionPasswordForm(this, row, "Paused","pause");
-            form.setVisible(true);            
+            form.setVisible(true);                    
         }
     }//GEN-LAST:event_pause_buttonActionPerformed
 
+    public void setButtonState_Pause()
+    {
+        pause_button.setEnabled(false);
+        unpause_button.setEnabled(true);
+    }
+    public void setButtonState_Unpause()
+    {
+        pause_button.setEnabled(true);
+        unpause_button.setEnabled(false);
+    }
     public Boolean setState(SessionPasswordForm form, int row, String state)
     {
        if(form.isAuth())
        {
-           model.setValueAt(state, row, 4);
+           model.setValueAt(state, row, 1);
        } 
        return true;
     }
@@ -240,12 +271,9 @@ public class SECP1_Form extends javax.swing.JFrame {
         if(login.isAuth())
         {
             RowModel row = new RowModel();
-            row.isSelected = false;            
-            row.orderNo = queueTable.getRowCount()+1;
             row.name = login.getName();
-            row.email = login.getEmail();
             row.status = "Unpaused";
-            model.addRow(new Object[]{row.isSelected,row.orderNo,row.name,row.email,row.status});
+            model.addRow(new Object[]{row.name, row.status});
             jLabel1.setVisible(false);
         }
     }    
@@ -253,9 +281,9 @@ public class SECP1_Form extends javax.swing.JFrame {
     private void unpause_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unpause_buttonActionPerformed
         // TODO add your handling code here:
         Object status = null;
-        int row = this.getRow();
+        int row = queueTable.getSelectedRow();
         if(row != -1)        
-            status = queueTable.getValueAt(row, 4);
+            status = queueTable.getValueAt(row, 1);
         if(status != null && status.toString().equals("Unpaused"))
             JOptionPane.showMessageDialog(this, "Selected entry is already unpaused");
         else if(row == -1) 
@@ -266,23 +294,14 @@ public class SECP1_Form extends javax.swing.JFrame {
             form.setVisible(true);
         }
     }//GEN-LAST:event_unpause_buttonActionPerformed
-
+    
     private void queueTablePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_queueTablePropertyChange
-        // TODO add your handling code here:
-        if(queueTable != null)
-        {
-            int row = this.getRow();
-            for(int i = 0; i < queueTable.getRowCount(); i++)
-            {
-                if(i != row)
-                    queueTable.setValueAt(false, i, 0);
-            }
-        }
+        // TODO add your handling code here:      
     }//GEN-LAST:event_queueTablePropertyChange
 
     private void remove_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remove_buttonActionPerformed
         // TODO add your handling code here:
-        int row = this.getRow();
+        int row = queueTable.getSelectedRow();
         if(row != -1)
         {
             SessionPasswordForm form = new SessionPasswordForm(this, row, "Unpaused","remove");
@@ -296,30 +315,37 @@ public class SECP1_Form extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Select an entry to remove");
     }//GEN-LAST:event_remove_buttonActionPerformed
 
+    private void queueTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_queueTableMouseClicked
+        // TODO add your handling code here:
+        int row = queueTable.getSelectedRow();
+        if(row != -1 && queueTable.getValueAt(row, 1).toString().equals("Unpaused"))
+        {
+            pause_button.setEnabled(true);
+            unpause_button.setEnabled(false);
+            remove_button.setEnabled(true);
+        }            
+        else if(row != -1 && queueTable.getValueAt(row, 1).toString().equals("Paused"))
+        {
+            unpause_button.setEnabled(true);
+            remove_button.setEnabled(true);
+            pause_button.setEnabled(false);
+        }
+        else
+        {
+            pause_button.setEnabled(false);
+            unpause_button.setEnabled(false);
+            remove_button.setEnabled(false);
+        }
+    }//GEN-LAST:event_queueTableMouseClicked
+
     public void removeRow(int row)
     {
         model.removeRow(row);
-            for(int i = row; i<queueTable.getRowCount();i++)
-            {
-                queueTable.setValueAt(row+1, i, 1);
-                row++;
-            }
-            if(queueTable.getRowCount() < 1)
-                jLabel1.setVisible(true);
-    }
-    
-    private int getRow()
-    {
-        int row = -1;
-        for(int i = 0; i < queueTable.getRowCount(); i++)
-        {
-            Object flag = queueTable.getValueAt(i, 0);
-            if(flag != null && (Boolean)flag == true)
-            {
-                row = i;
-            }
-        }
-        return row;
+        if(queueTable.getRowCount() < 1)
+            jLabel1.setVisible(true);
+        remove_button.setEnabled(false);
+        pause_button.setEnabled(false);
+        unpause_button.setEnabled(false);
     }
     /**
      * @param args the command line arguments

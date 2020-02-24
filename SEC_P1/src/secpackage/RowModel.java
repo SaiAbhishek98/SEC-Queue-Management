@@ -9,11 +9,11 @@ package secpackage;
  *
  * @author sanidhya
  */
-public class RowModel {
+public class RowModel 
+{
     public Boolean isSelected;
     public Integer orderNo;
     public String name;
     public String email;
-    public String status;
-    
+    public String status;    
 }

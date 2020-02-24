@@ -160,8 +160,8 @@ public class loginForm extends javax.swing.JFrame {
         else
         {
             this.setName();
-            this.setEmail();
-            this.setPassword();
+//            this.setEmail();
+//            this.setPassword();
             sec.setTable(this);
             this.dispose();
         }
