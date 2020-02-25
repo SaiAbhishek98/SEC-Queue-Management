@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicListUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -52,7 +53,8 @@ public class SECP1_Form extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents() 
+    {
 
         jLabel3 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
@@ -221,6 +223,35 @@ public class SECP1_Form extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        queueTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() 
+        {
+			public void valueChanged(ListSelectionEvent lse) 
+			{
+		        if (!lse.getValueIsAdjusting()) 
+		        {
+		            int row = queueTable.getSelectedRow();
+			        if(row != -1 && queueTable.getValueAt(row, 1).toString().equals("Unpaused"))
+			        {
+			            pause_button.setEnabled(true);
+			            unpause_button.setEnabled(false);
+			            remove_button.setEnabled(true);
+			        }            
+			        else if(row != -1 && queueTable.getValueAt(row, 1).toString().equals("Paused"))
+			        {
+			            unpause_button.setEnabled(true);
+			            remove_button.setEnabled(true);
+			            pause_button.setEnabled(false);
+			        }
+			        else
+			        {
+			            pause_button.setEnabled(false);
+			            unpause_button.setEnabled(false);
+			            remove_button.setEnabled(false);
+			        }
+		        }
+	    	}
+		});
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -317,25 +348,6 @@ public class SECP1_Form extends javax.swing.JFrame {
 
     private void queueTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_queueTableMouseClicked
         // TODO add your handling code here:
-        int row = queueTable.getSelectedRow();
-        if(row != -1 && queueTable.getValueAt(row, 1).toString().equals("Unpaused"))
-        {
-            pause_button.setEnabled(true);
-            unpause_button.setEnabled(false);
-            remove_button.setEnabled(true);
-        }            
-        else if(row != -1 && queueTable.getValueAt(row, 1).toString().equals("Paused"))
-        {
-            unpause_button.setEnabled(true);
-            remove_button.setEnabled(true);
-            pause_button.setEnabled(false);
-        }
-        else
-        {
-            pause_button.setEnabled(false);
-            unpause_button.setEnabled(false);
-            remove_button.setEnabled(false);
-        }
     }//GEN-LAST:event_queueTableMouseClicked
 
     public void removeRow(int row)
