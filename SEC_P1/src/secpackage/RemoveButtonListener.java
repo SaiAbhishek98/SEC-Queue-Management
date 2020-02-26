@@ -26,5 +26,8 @@ public class RemoveButtonListener implements java.awt.event.ActionListener
         {
             SessionPasswordForm form = new SessionPasswordForm(s, row, null,"remove");
         }
+        s.setRemoveButtonState(Boolean.FALSE);
+        s.setPauseButtonState(Boolean.FALSE);
+        s.setUnpauseButtonState(Boolean.FALSE);
     }
 }

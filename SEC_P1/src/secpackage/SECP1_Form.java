@@ -46,6 +46,9 @@ public class SECP1_Form extends javax.swing.JFrame {
         pause_button.setEnabled(false);
         unpause_button.setEnabled(false);
         remove_button.setEnabled(false);
+        pause_button.setToolTipText("Select an entry to pause");
+        unpause_button.setToolTipText("Select an entry to unpause");
+        remove_button.setToolTipText("Select an entry to remove");
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         queueTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
@@ -61,6 +64,21 @@ public class SECP1_Form extends javax.swing.JFrame {
     {
         return (String)this.queueTable.getValueAt(queueTable.getSelectedRow(), 0);
     }
+    
+    public String getUserStatus()
+    {
+        return (String)this.queueTable.getValueAt(queueTable.getSelectedRow(), 1);
+    }
+    
+    public void removeTableRow(int val)
+    {
+        model.removeRow(val);
+    }
+    
+    public int getRowCount() {
+        return model.getRowCount();
+    }
+    
     
     public void initTable()
     {
@@ -392,10 +410,25 @@ public class SECP1_Form extends javax.swing.JFrame {
         model.removeRow(row);
         if(queueTable.getRowCount() < 1)
             jLabel1.setVisible(true);
-        remove_button.setEnabled(false);
-        pause_button.setEnabled(false);
-        unpause_button.setEnabled(false);
+        setRemoveButtonState(false);
+        setPauseButtonState(false);
+        setUnpauseButtonState(false);
     }
+    
+    public void setRemoveButtonState(Boolean value) {
+        remove_button.setEnabled(value);
+    }
+    public void setPauseButtonState(Boolean value) {
+        pause_button.setEnabled(value);
+    }
+    public void setUnpauseButtonState(Boolean value) {
+        unpause_button.setEnabled(value);
+    }
+    
+    public void setRowStatusVisible(Boolean value) {
+        jLabel1.setVisible(value);
+    }
+    
     /**
      * @param args the command line arguments
      */
