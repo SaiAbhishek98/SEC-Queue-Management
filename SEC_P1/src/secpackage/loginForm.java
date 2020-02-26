@@ -158,8 +158,8 @@ public class loginForm extends javax.swing.JFrame {
     private String loginValue = null;
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:'
-        if(emailTextField.getText().equals("") || jPasswordField.getPassword().length == 0)
-            JOptionPane.showMessageDialog(this, "Enter login id and password");
+        if(emailTextField.getText().equals("") || jPasswordField.getPassword().length == 0 || nameTextField.getText().equals(""))
+            JOptionPane.showMessageDialog(this, "Enter name, email id and password");
         else
         {
             this.setName();

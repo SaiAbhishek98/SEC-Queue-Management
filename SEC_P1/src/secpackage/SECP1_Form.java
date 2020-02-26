@@ -31,6 +31,8 @@ public class SECP1_Form extends javax.swing.JFrame {
     final String lexicon = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcsdefghijklmnopqrstuvwxyz";
     final java.util.Random rand = new java.util.Random();
     final Set<String> identifiers = new HashSet<String>();
+    public int row = -1;
+    
     /**
      * Creates new form SECP1_Form
      */
@@ -53,6 +55,11 @@ public class SECP1_Form extends javax.swing.JFrame {
          this.initTable();
         if(queueTable.getRowCount() < 1)
             jLabel1.setVisible(true);
+    }
+    
+    public String getName()
+    {
+        return (String)this.queueTable.getValueAt(queueTable.getSelectedRow(), 0);
     }
     
     public void initTable()
@@ -125,35 +132,19 @@ public class SECP1_Form extends javax.swing.JFrame {
 
         add_button.setText("Add");
         add_button.setToolTipText("Adds a new entry to the queue.");
-        add_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                add_buttonActionPerformed(evt);
-            }
-        });
+        add_button.addActionListener(new AddButtonListener(this));
 
         remove_button.setText("Remove");
         remove_button.setToolTipText("Removes selected entry from queue.");
-        remove_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                remove_buttonActionPerformed(evt);
-            }
-        });
+        remove_button.addActionListener(new RemoveButtonListener(this));
 
         pause_button.setText("Pause");
         pause_button.setToolTipText("Pauses the selected entry.");
-        pause_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pause_buttonActionPerformed(evt);
-            }
-        });
+        pause_button.addActionListener(new PauseButtonListener(this));
 
         unpause_button.setText("Unpause");
         unpause_button.setToolTipText("Unpauses the selected entry.");
-        unpause_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                unpause_buttonActionPerformed(evt);
-            }
-        });
+        unpause_button.addActionListener(new UnpauseButtonListener(this));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -273,9 +264,9 @@ public class SECP1_Form extends javax.swing.JFrame {
         {
             public void valueChanged(ListSelectionEvent lse) 
             {
+                row = queueTable.getSelectedRow();
                 if (!lse.getValueIsAdjusting()) 
-                {
-                    int row = queueTable.getSelectedRow();
+                {                    
                     if(row != -1 && queueTable.getValueAt(row, 1).toString().equals("Unpaused"))
                     {
                         pause_button.setEnabled(true);
@@ -303,19 +294,19 @@ public class SECP1_Form extends javax.swing.JFrame {
 
     private void pause_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pause_buttonActionPerformed
         // TODO add your handling code here:
-        Object status = null;
-        int row = queueTable.getSelectedRow();
-        if(row != -1)        
-            status = queueTable.getValueAt(row, 1);
-        if(status != null && status.toString().equals("Paused"))
-            JOptionPane.showMessageDialog(this, "Selected entry is already paused");
-        else if(row == -1)            
-            JOptionPane.showMessageDialog(this, "Select an entry first");
-        else
-        {
-            SessionPasswordForm form = new SessionPasswordForm(this, row, "Paused","pause");
-            form.setVisible(true);                    
-        }
+//        Object status = null;
+//        int row = queueTable.getSelectedRow();
+//        if(row != -1)        
+//            status = queueTable.getValueAt(row, 1);
+//        if(status != null && status.toString().equals("Paused"))
+//            JOptionPane.showMessageDialog(this, "Selected entry is already paused");
+//        else if(row == -1)            
+//            JOptionPane.showMessageDialog(this, "Select an entry first");
+//        else
+//        {
+//            SessionPasswordForm form = new SessionPasswordForm(this, row, "Paused","pause");
+//            form.setVisible(true);                    
+//        }
     }//GEN-LAST:event_pause_buttonActionPerformed
 
     public void setButtonState_Pause()
@@ -339,8 +330,8 @@ public class SECP1_Form extends javax.swing.JFrame {
     
     private void add_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_buttonActionPerformed
         // TODO add your handling code here:
-        loginForm login = new loginForm(this);
-        login.setVisible(true);
+//        loginForm login = new loginForm(this);
+//        login.setVisible(true);
     }//GEN-LAST:event_add_buttonActionPerformed
 
     public void setTable(loginForm login)
@@ -357,19 +348,19 @@ public class SECP1_Form extends javax.swing.JFrame {
     
     private void unpause_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unpause_buttonActionPerformed
         // TODO add your handling code here:
-        Object status = null;
-        int row = queueTable.getSelectedRow();
-        if(row != -1)        
-            status = queueTable.getValueAt(row, 1);
-        if(status != null && status.toString().equals("Unpaused"))
-            JOptionPane.showMessageDialog(this, "Selected entry is already unpaused");
-        else if(row == -1) 
-            JOptionPane.showMessageDialog(this, "Select an entry first");
-        else
-        {
-            SessionPasswordForm form = new SessionPasswordForm(this, row, "Unpaused", "unpause");
-            form.setVisible(true);
-        }
+//        Object status = null;
+//        int row = queueTable.getSelectedRow();
+//        if(row != -1)        
+//            status = queueTable.getValueAt(row, 1);
+//        if(status != null && status.toString().equals("Unpaused"))
+//            JOptionPane.showMessageDialog(this, "Selected entry is already unpaused");
+//        else if(row == -1) 
+//            JOptionPane.showMessageDialog(this, "Select an entry first");
+//        else
+//        {
+//            SessionPasswordForm form = new SessionPasswordForm(this, row, "Unpaused", "unpause");
+//            form.setVisible(true);
+//        }
     }//GEN-LAST:event_unpause_buttonActionPerformed
     
     private void queueTablePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_queueTablePropertyChange
@@ -378,18 +369,18 @@ public class SECP1_Form extends javax.swing.JFrame {
 
     private void remove_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remove_buttonActionPerformed
         // TODO add your handling code here:
-        int row = queueTable.getSelectedRow();
-        if(row != -1)
-        {
-            SessionPasswordForm form = new SessionPasswordForm(this, row, "Unpaused","remove");
-            form.setVisible(true);
-        }
-        else if(row == -1 && queueTable.getRowCount() < 1)
-        {
-            JOptionPane.showMessageDialog(this, "No more entries to remove");   
-        }
-        else
-            JOptionPane.showMessageDialog(this, "Select an entry to remove");
+//        int row = queueTable.getSelectedRow();
+//        if(row != -1)
+//        {
+//            SessionPasswordForm form = new SessionPasswordForm(this, row, "Unpaused","remove");
+//            form.setVisible(true);
+//        }
+//        else if(row == -1 && queueTable.getRowCount() < 1)
+//        {
+//            JOptionPane.showMessageDialog(this, "No more entries to remove");   
+//        }
+//        else
+//            JOptionPane.showMessageDialog(this, "Select an entry to remove");
     }//GEN-LAST:event_remove_buttonActionPerformed
 
     private void queueTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_queueTableMouseClicked
