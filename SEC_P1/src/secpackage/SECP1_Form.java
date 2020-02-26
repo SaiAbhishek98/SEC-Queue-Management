@@ -5,6 +5,7 @@
  */
 package secpackage;
 
+import java.util.HashSet;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -15,6 +16,8 @@ import javax.swing.plaf.basic.BasicListUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import java.util.Random; 
+import java.util.Set;
 
 /**
  *
@@ -25,6 +28,9 @@ public class SECP1_Form extends javax.swing.JFrame {
     public Integer count = -1;
     DefaultTableModel model = null;
     public ListSelectionModel rowSelectionModel = null;
+    final String lexicon = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcsdefghijklmnopqrstuvwxyz";
+    final java.util.Random rand = new java.util.Random();
+    final Set<String> identifiers = new HashSet<String>();
     /**
      * Creates new form SECP1_Form
      */
@@ -44,7 +50,51 @@ public class SECP1_Form extends javax.swing.JFrame {
         queueTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
         ((DefaultTableCellRenderer)queueTable.getTableHeader().getDefaultRenderer())
         .setHorizontalAlignment(JLabel.CENTER);
+         this.initTable();
+        if(queueTable.getRowCount() < 1)
+            jLabel1.setVisible(true);
     }
+    
+    public void initTable()
+    {
+        int rand = this.getRandomNumberInRange(0, 4);
+        for(int i =0; i <rand; i++)
+        {
+            RowModel row = new RowModel();
+            row.name = this.generateName();
+            row.status = "Unpaused";
+            row.email = row.name + "@gmail.com";
+            model.addRow(new Object[]{row.name, row.status});
+        }
+    }
+    
+    private static int getRandomNumberInRange(int min, int max) 
+    {
+        if (min >= max) 
+        {
+                throw new IllegalArgumentException("max must be greater than min");
+        }
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
+    }
+    
+    public String generateName()
+    {
+        StringBuilder builder = new StringBuilder();
+        while(builder.toString().length() == 0) 
+        {
+            int length = rand.nextInt(5)+5;
+            for(int i = 0; i < length; i++) {
+                builder.append(lexicon.charAt(rand.nextInt(lexicon.length())));
+            }
+            if(identifiers.contains(builder.toString())) {
+                builder = new StringBuilder();
+            }
+        }
+        String output = builder.toString().substring(0, 1).toUpperCase() + builder.toString().substring(1,builder.length()).toLowerCase();
+        return output;    
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,8 +103,7 @@ public class SECP1_Form extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() 
-    {
+    private void initComponents() {
 
         jLabel3 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
@@ -134,10 +183,7 @@ public class SECP1_Form extends javax.swing.JFrame {
 
         queueTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"A", "Unpaused"},
-                {"B", "Unpaused"},
-                {"C", "Unpaused"},
-                {"D", "Unpaused"}
+
             },
             new String [] {
                 "Name", "Status"
@@ -225,32 +271,32 @@ public class SECP1_Form extends javax.swing.JFrame {
 
         queueTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() 
         {
-			public void valueChanged(ListSelectionEvent lse) 
-			{
-		        if (!lse.getValueIsAdjusting()) 
-		        {
-		            int row = queueTable.getSelectedRow();
-			        if(row != -1 && queueTable.getValueAt(row, 1).toString().equals("Unpaused"))
-			        {
-			            pause_button.setEnabled(true);
-			            unpause_button.setEnabled(false);
-			            remove_button.setEnabled(true);
-			        }            
-			        else if(row != -1 && queueTable.getValueAt(row, 1).toString().equals("Paused"))
-			        {
-			            unpause_button.setEnabled(true);
-			            remove_button.setEnabled(true);
-			            pause_button.setEnabled(false);
-			        }
-			        else
-			        {
-			            pause_button.setEnabled(false);
-			            unpause_button.setEnabled(false);
-			            remove_button.setEnabled(false);
-			        }
-		        }
-	    	}
-		});
+            public void valueChanged(ListSelectionEvent lse) 
+            {
+                if (!lse.getValueIsAdjusting()) 
+                {
+                    int row = queueTable.getSelectedRow();
+                    if(row != -1 && queueTable.getValueAt(row, 1).toString().equals("Unpaused"))
+                    {
+                        pause_button.setEnabled(true);
+                        unpause_button.setEnabled(false);
+                        remove_button.setEnabled(true);
+                    }            
+                    else if(row != -1 && queueTable.getValueAt(row, 1).toString().equals("Paused"))
+                    {
+                        unpause_button.setEnabled(true);
+                        remove_button.setEnabled(true);
+                        pause_button.setEnabled(false);
+                    }
+                    else
+                    {
+                        pause_button.setEnabled(false);
+                        unpause_button.setEnabled(false);
+                        remove_button.setEnabled(false);
+                    }
+                }
+            }
+        });
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
