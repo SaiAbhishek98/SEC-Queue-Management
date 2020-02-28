@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 /**
- *
+ * Action  Listener class for add button in SECP1_Form
  * @author sanidhya
  */
 public class AddButtonListener implements java.awt.event.ActionListener
