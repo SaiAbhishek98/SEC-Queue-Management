@@ -197,7 +197,7 @@ public class SessionPasswordForm extends javax.swing.JFrame {
         isValid = true;
     }//GEN-LAST:event_formWindowClosed
 
-    //This method is called for authorization 
+    //This method is called for authorization of the session password.
     public Boolean isAuth()
     {
         return isValid;
