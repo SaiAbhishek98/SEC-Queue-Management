@@ -6,7 +6,7 @@
 package secpackage;
 
 /**
- *
+ * Defines a row object for the table.
  * @author sanidhya
  */
 public class RowModel 
