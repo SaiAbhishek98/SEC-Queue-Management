@@ -10,10 +10,15 @@ import sun.security.util.Password;
 
 
 /**
- *
+ * Login form window.
  * @author sanidhya
  */
 public class loginForm extends javax.swing.JFrame {
+    
+    
+    private String name;
+    private String email;
+    private char[] password;
 
     public SECP1_Form sec = null;
     /**
@@ -26,6 +31,10 @@ public class loginForm extends javax.swing.JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
     
+    
+    /*
+    Constructor which takes in parent instance.
+    */
     public loginForm(SECP1_Form ins)
     {
         initComponents();
@@ -170,49 +179,71 @@ public class loginForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 
-    private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameTextFieldActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordFieldActionPerformed
-        // TODO add your handling code here:
-      
-    }//GEN-LAST:event_jPasswordFieldActionPerformed
 
-    private String name;
-    private String email;
-    private char[] password;
-    
+
+    /*
+    Gets name field.
+    */
     public String getName()
     {
         return name;
     }
+    
+    
+    /*
+    Gets name field.
+    */
     public void setName() {
         this.name = this.nameTextField.getText();
     }
+    
+    
+    /*
+    Gets password field.
+    */
     public char[] getPassword() {
         return password;
     }
+    
+    
+    /*
+    Sets password field.
+    */
     public void setPassword() {
         this.password = this.jPasswordField.getPassword();
     }
+    
+    
+    /*
+    Gets email field.
+    */
     public String getEmail()
     {
         return email;
     }
+    
+    
+    /*
+    Sets email field.
+    */
     public void setEmail() {
         this.email = this.emailTextField.getText();
     }
     
+    /*
+    Authenticates the user data.
+    */
     public Boolean isAuth()
     {
         return true;
     }
+    
+    
     /**
      * @param args the command line arguments
      */
