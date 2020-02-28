@@ -46,9 +46,9 @@ public class SECP1_Form extends javax.swing.JFrame {
         pause_button.setEnabled(false);
         unpause_button.setEnabled(false);
         remove_button.setEnabled(false);
-        pause_button.setToolTipText("Pauses the selected unpaused entry.");
-        unpause_button.setToolTipText("Unpauses the selected paused entry.");
-        remove_button.setToolTipText("Removes the selected entry.");
+        pause_button.setToolTipText("Select an entry to pause");
+        unpause_button.setToolTipText("Select an entry to unpause");
+        remove_button.setToolTipText("Select an entry to remove");
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         queueTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
@@ -58,6 +58,7 @@ public class SECP1_Form extends javax.swing.JFrame {
          this.initTable();
         if(queueTable.getRowCount() < 1)
             jLabel1.setVisible(true);
+        queueTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
     }
     
     public String getName()

@@ -8,10 +8,6 @@ package secpackage;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author sanidhya
- */
 public class SessionPasswordForm extends javax.swing.JFrame {
 
     SECP1_Form sess = null;
@@ -19,9 +15,10 @@ public class SessionPasswordForm extends javax.swing.JFrame {
     private int row;
     private String st = null;
     private String b = null;
-    /**
-     * Creates new form SessionPasswordForm
-     */
+    
+    /*
+    This is the parameterized constructor for the Main forms class.
+    */    
     public SessionPasswordForm(SECP1_Form ins, int row, String state, String button) {
         initComponents();
         sess = ins;
@@ -34,7 +31,12 @@ public class SessionPasswordForm extends javax.swing.JFrame {
         this.setVisible(true);
         this.nameLabel.setVisible(true);
         this.nameLabel.setText("Enter session password to " + button+ " " + sess.getName() +"'s entry.");
+        this.nameLabel.setToolTipText("Enter session password to " + button+ " " + sess.getName() +"'s entry.");
     }
+    
+    /*
+    This is the default constructor for the Main forms class.
+    */  
     public SessionPasswordForm() 
     {
         initComponents();
@@ -109,7 +111,7 @@ public class SessionPasswordForm extends javax.swing.JFrame {
                                 .addComponent(passwordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(nameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -153,6 +155,9 @@ public class SessionPasswordForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jPasswordFieldActionPerformed
 
+    /*
+    This method is called when the conform button is clicked on the UI.
+    */
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
         if(jPasswordField.getPassword().length == 0)
@@ -180,16 +185,19 @@ public class SessionPasswordForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 
+    //This method is called when the cancel button is clicked on the UI.
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    //This is the form's window closing event.
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
         isValid = true;
     }//GEN-LAST:event_formWindowClosed
 
+    //This method is called for authorization 
     public Boolean isAuth()
     {
         return isValid;
