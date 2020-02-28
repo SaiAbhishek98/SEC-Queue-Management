@@ -8,7 +8,7 @@ package secpackage;
 import java.awt.event.ActionEvent;
 
 /**
- *
+ * Action  Listener class for add button in SECP1_Form
  * @author sanidhya
  */
 public class PauseButtonListener implements java.awt.event.ActionListener
