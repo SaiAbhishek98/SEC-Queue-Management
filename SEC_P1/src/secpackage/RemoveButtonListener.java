@@ -8,7 +8,7 @@ package secpackage;
 import java.awt.event.ActionEvent;
 
 /**
- *
+ * Action  Listener class for remove button in SECP1_Form
  * @author sanidhya
  */
 public class RemoveButtonListener implements java.awt.event.ActionListener
